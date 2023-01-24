@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1b79f28f3c5142a7ab7b8b58fd5e0ac0" Name="Diagram1">
+        <EntityTypeShape EntityType="FurnitureDBModel.Accounts" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FurnitureDBModel.Buyers" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FurnitureDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FurnitureDBModel.Workers" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="FurnitureDBModel.FK_Buyers_Accounts" ManuallyRouted="false" />
+        <AssociationConnector Association="FurnitureDBModel.FK_Workers_Accounts" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
