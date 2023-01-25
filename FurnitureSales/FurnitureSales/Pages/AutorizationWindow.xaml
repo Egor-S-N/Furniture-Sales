@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureSales"
         mc:Ignorable="d"
-        Title="AutorizationWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="AutorizationWindow" Height="450" Width="800"
+        ResizeMode="NoResize">
+    <Grid ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="20,20" Visibility="Visible" Source="/Resources/logo.jpg"/>
+
+
+        <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Content="Enter login" Margin="-3,-10"/>
+        <Label Name="errorLogin"  Foreground="Red" Visibility="Hidden" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Content="Неверный логин"  Margin="3, 46, 0,0" Height="20" VerticalAlignment="Top" Padding="0"/>
+        <TextBox Name="loginTextBox" TextChanged="TextChanged" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  BorderBrush="Black" Padding="5" Height="30"/>
+
+
+
+        <Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Content="Enter password" Margin="-3,-2"/>
+        <Label  Name="errorPassword" Foreground="Red" Visibility="Hidden" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="Неверный пароль"  Margin="3, 50, 0,0" Height="20" VerticalAlignment="Top" Padding="0"/>
+        <TextBox Name="passwordShowTextBox" TextChanged="TextChanged" Visibility="Hidden" Padding="5" Margin="0,20" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"  BorderBrush="Black" VerticalAlignment="Top"  Height="30" />
+        <PasswordBox Name="passwordHideBox" PasswordChanged="TextChanged" Padding="5" Margin="0,20" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"  BorderBrush="Black" VerticalAlignment="Top"  Height="30" />
+        <CheckBox Name="showHidePassword" Grid.Row="4" Grid.Column="4" Content="Показать пароль" Margin="7,14,0,0" Height="20" Checked="ShowPassword" Unchecked="HidePassword"/>
+
+        <Button Name="butEnter" Content="Войти" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="15" Click="butEnter_Click"/>
     </Grid>
 </Window>

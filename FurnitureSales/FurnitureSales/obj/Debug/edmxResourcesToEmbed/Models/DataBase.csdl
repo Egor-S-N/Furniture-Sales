@@ -21,16 +21,7 @@
     <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="codeAccount" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Accounts" Relationship="Self.FK_Buyers_Accounts" FromRole="Buyers" ToRole="Accounts" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="Contarcts" Relationship="FurnitureDBModel.FK_Contarcts_Buyers" FromRole="Buyers" ToRole="Contarcts" />
   </EntityType>
   <EntityType Name="Workers">
     <Key>
@@ -73,7 +64,6 @@
   <EntityContainer Name="FurnitureDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Accounts" EntityType="Self.Accounts" />
     <EntitySet Name="Buyers" EntityType="Self.Buyers" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Workers" EntityType="Self.Workers" />
     <AssociationSet Name="FK_Buyers_Accounts" Association="Self.FK_Buyers_Accounts">
       <End Role="Accounts" EntitySet="Accounts" />
@@ -83,5 +73,117 @@
       <End Role="Accounts" EntitySet="Accounts" />
       <End Role="Workers" EntitySet="Workers" />
     </AssociationSet>
+    <EntitySet Name="Contarcts" EntityType="FurnitureDBModel.Contarcts" />
+    <EntitySet Name="ContractsSales" EntityType="FurnitureDBModel.ContractsSales" />
+    <EntitySet Name="Sales" EntityType="FurnitureDBModel.Sales" />
+    <EntitySet Name="TypesOfFurnitures" EntityType="FurnitureDBModel.TypesOfFurnitures" />
+    <AssociationSet Name="FK_Contarcts_Buyers" Association="FurnitureDBModel.FK_Contarcts_Buyers">
+      <End Role="Buyers" EntitySet="Buyers" />
+      <End Role="Contarcts" EntitySet="Contarcts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractsSales_Contarcts" Association="FurnitureDBModel.FK_ContractsSales_Contarcts">
+      <End Role="Contarcts" EntitySet="Contarcts" />
+      <End Role="ContractsSales" EntitySet="ContractsSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractsSales_TypesOfFurnitures" Association="FurnitureDBModel.FK_ContractsSales_TypesOfFurnitures">
+      <End Role="TypesOfFurnitures" EntitySet="TypesOfFurnitures" />
+      <End Role="ContractsSales" EntitySet="ContractsSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_TypesOfFurnitures" Association="FurnitureDBModel.FK_Sales_TypesOfFurnitures">
+      <End Role="TypesOfFurnitures" EntitySet="TypesOfFurnitures" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Contarcts">
+    <Key>
+      <PropertyRef Name="idContract" />
+    </Key>
+    <Property Name="idContract" Type="Int32" Nullable="false" />
+    <Property Name="idBuyer" Type="Int32" Nullable="false" />
+    <Property Name="registrationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="dueDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="order" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Buyers" Relationship="FurnitureDBModel.FK_Contarcts_Buyers" FromRole="Contarcts" ToRole="Buyers" />
+    <NavigationProperty Name="ContractsSales" Relationship="FurnitureDBModel.FK_ContractsSales_Contarcts" FromRole="Contarcts" ToRole="ContractsSales" />
+  </EntityType>
+  <EntityType Name="ContractsSales">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="idContract" Type="Int32" Nullable="false" />
+    <Property Name="TypeOfFurniture" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Contarcts" Relationship="FurnitureDBModel.FK_ContractsSales_Contarcts" FromRole="ContractsSales" ToRole="Contarcts" />
+    <NavigationProperty Name="TypesOfFurnitures" Relationship="FurnitureDBModel.FK_ContractsSales_TypesOfFurnitures" FromRole="ContractsSales" ToRole="TypesOfFurnitures" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="idSale" />
+    </Key>
+    <Property Name="idSale" Type="Int32" Nullable="false" />
+    <Property Name="furnitureName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="numberOfSold" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TypesOfFurnitures" Relationship="FurnitureDBModel.FK_Sales_TypesOfFurnitures" FromRole="Sales" ToRole="TypesOfFurnitures" />
+  </EntityType>
+  <EntityType Name="TypesOfFurnitures">
+    <Key>
+      <PropertyRef Name="model" />
+    </Key>
+    <Property Name="model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="furnitureName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="furnitureCharacteristics" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ContractsSales" Relationship="FurnitureDBModel.FK_ContractsSales_TypesOfFurnitures" FromRole="TypesOfFurnitures" ToRole="ContractsSales" />
+    <NavigationProperty Name="Sales" Relationship="FurnitureDBModel.FK_Sales_TypesOfFurnitures" FromRole="TypesOfFurnitures" ToRole="Sales" />
+  </EntityType>
+  <Association Name="FK_Contarcts_Buyers">
+    <End Type="FurnitureDBModel.Buyers" Role="Buyers" Multiplicity="1" />
+    <End Type="FurnitureDBModel.Contarcts" Role="Contarcts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buyers">
+        <PropertyRef Name="idBuyer" />
+      </Principal>
+      <Dependent Role="Contarcts">
+        <PropertyRef Name="idBuyer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractsSales_Contarcts">
+    <End Type="FurnitureDBModel.Contarcts" Role="Contarcts" Multiplicity="1" />
+    <End Type="FurnitureDBModel.ContractsSales" Role="ContractsSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contarcts">
+        <PropertyRef Name="idContract" />
+      </Principal>
+      <Dependent Role="ContractsSales">
+        <PropertyRef Name="idContract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractsSales_TypesOfFurnitures">
+    <End Type="FurnitureDBModel.TypesOfFurnitures" Role="TypesOfFurnitures" Multiplicity="1" />
+    <End Type="FurnitureDBModel.ContractsSales" Role="ContractsSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypesOfFurnitures">
+        <PropertyRef Name="model" />
+      </Principal>
+      <Dependent Role="ContractsSales">
+        <PropertyRef Name="TypeOfFurniture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_TypesOfFurnitures">
+    <End Type="FurnitureDBModel.TypesOfFurnitures" Role="TypesOfFurnitures" Multiplicity="1" />
+    <End Type="FurnitureDBModel.Sales" Role="Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypesOfFurnitures">
+        <PropertyRef Name="model" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="model" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

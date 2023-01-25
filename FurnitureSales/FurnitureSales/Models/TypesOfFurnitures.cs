@@ -12,22 +12,23 @@ namespace FurnitureSales.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Buyers
+    public partial class TypesOfFurnitures
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Buyers()
+        public TypesOfFurnitures()
         {
-            this.Contarcts = new HashSet<Contarcts>();
+            this.ContractsSales = new HashSet<ContractsSales>();
+            this.Sales = new HashSet<Sales>();
         }
     
-        public int idBuyer { get; set; }
-        public string nameOfOrganization { get; set; }
-        public string adress { get; set; }
-        public string phone { get; set; }
-        public int codeAccount { get; set; }
+        public string model { get; set; }
+        public string furnitureName { get; set; }
+        public string furnitureCharacteristics { get; set; }
+        public int price { get; set; }
     
-        public virtual Accounts Accounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contarcts> Contarcts { get; set; }
+        public virtual ICollection<ContractsSales> ContractsSales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sales> Sales { get; set; }
     }
 }

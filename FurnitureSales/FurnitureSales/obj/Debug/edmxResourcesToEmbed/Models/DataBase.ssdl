@@ -19,15 +19,42 @@
     <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="codeAccount" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
+  <EntityType Name="Contarcts">
     <Key>
-      <PropertyRef Name="diagram_id" />
+      <PropertyRef Name="idContract" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="idContract" Type="int" Nullable="false" />
+    <Property Name="idBuyer" Type="int" Nullable="false" />
+    <Property Name="registrationDate" Type="date" Nullable="false" />
+    <Property Name="dueDate" Type="date" Nullable="false" />
+    <Property Name="order" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContractsSales">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="idContract" Type="int" Nullable="false" />
+    <Property Name="TypeOfFurniture" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="count" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="idSale" />
+    </Key>
+    <Property Name="idSale" Type="int" Nullable="false" />
+    <Property Name="furnitureName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="numberOfSold" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TypesOfFurnitures">
+    <Key>
+      <PropertyRef Name="model" />
+    </Key>
+    <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="furnitureName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="furnitureCharacteristics" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="price" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Workers">
     <Key>
@@ -54,6 +81,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Contarcts_Buyers">
+    <End Role="Buyers" Type="Self.Buyers" Multiplicity="1" />
+    <End Role="Contarcts" Type="Self.Contarcts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buyers">
+        <PropertyRef Name="idBuyer" />
+      </Principal>
+      <Dependent Role="Contarcts">
+        <PropertyRef Name="idBuyer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractsSales_Contarcts">
+    <End Role="Contarcts" Type="Self.Contarcts" Multiplicity="1" />
+    <End Role="ContractsSales" Type="Self.ContractsSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contarcts">
+        <PropertyRef Name="idContract" />
+      </Principal>
+      <Dependent Role="ContractsSales">
+        <PropertyRef Name="idContract" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractsSales_TypesOfFurnitures">
+    <End Role="TypesOfFurnitures" Type="Self.TypesOfFurnitures" Multiplicity="1" />
+    <End Role="ContractsSales" Type="Self.ContractsSales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypesOfFurnitures">
+        <PropertyRef Name="model" />
+      </Principal>
+      <Dependent Role="ContractsSales">
+        <PropertyRef Name="TypeOfFurniture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_TypesOfFurnitures">
+    <End Role="TypesOfFurnitures" Type="Self.TypesOfFurnitures" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypesOfFurnitures">
+        <PropertyRef Name="model" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="model" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Workers_Accounts">
     <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
     <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
@@ -69,11 +144,30 @@
   <EntityContainer Name="Хранилище FurnitureDBModelContainer">
     <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Buyers" EntityType="Self.Buyers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contarcts" EntityType="Self.Contarcts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContractsSales" EntityType="Self.ContractsSales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypesOfFurnitures" EntityType="Self.TypesOfFurnitures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Buyers_Accounts" Association="Self.FK_Buyers_Accounts">
       <End Role="Accounts" EntitySet="Accounts" />
       <End Role="Buyers" EntitySet="Buyers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contarcts_Buyers" Association="Self.FK_Contarcts_Buyers">
+      <End Role="Buyers" EntitySet="Buyers" />
+      <End Role="Contarcts" EntitySet="Contarcts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractsSales_Contarcts" Association="Self.FK_ContractsSales_Contarcts">
+      <End Role="Contarcts" EntitySet="Contarcts" />
+      <End Role="ContractsSales" EntitySet="ContractsSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractsSales_TypesOfFurnitures" Association="Self.FK_ContractsSales_TypesOfFurnitures">
+      <End Role="TypesOfFurnitures" EntitySet="TypesOfFurnitures" />
+      <End Role="ContractsSales" EntitySet="ContractsSales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_TypesOfFurnitures" Association="Self.FK_Sales_TypesOfFurnitures">
+      <End Role="TypesOfFurnitures" EntitySet="TypesOfFurnitures" />
+      <End Role="Sales" EntitySet="Sales" />
     </AssociationSet>
     <AssociationSet Name="FK_Workers_Accounts" Association="Self.FK_Workers_Accounts">
       <End Role="Accounts" EntitySet="Accounts" />

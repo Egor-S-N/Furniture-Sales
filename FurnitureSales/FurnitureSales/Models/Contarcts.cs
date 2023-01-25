@@ -12,22 +12,22 @@ namespace FurnitureSales.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Buyers
+    public partial class Contarcts
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Buyers()
+        public Contarcts()
         {
-            this.Contarcts = new HashSet<Contarcts>();
+            this.ContractsSales = new HashSet<ContractsSales>();
         }
     
+        public int idContract { get; set; }
         public int idBuyer { get; set; }
-        public string nameOfOrganization { get; set; }
-        public string adress { get; set; }
-        public string phone { get; set; }
-        public int codeAccount { get; set; }
+        public System.DateTime registrationDate { get; set; }
+        public System.DateTime dueDate { get; set; }
+        public int order { get; set; }
     
-        public virtual Accounts Accounts { get; set; }
+        public virtual Buyers Buyers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contarcts> Contarcts { get; set; }
+        public virtual ICollection<ContractsSales> ContractsSales { get; set; }
     }
 }

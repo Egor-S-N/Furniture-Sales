@@ -26,11 +26,56 @@ namespace FurnitureSales
             
             InitializeComponent();
 
-            foreach(var i in db.Accounts)
+          
+        }
+
+        private void butEnter_Click(object sender, RoutedEventArgs e)
+        {
+            var users = from account in db.Accounts where account.login == loginTextBox.Text && account.password == passwordHideBox.Password select account;
+            if (users.Count() != 0)
             {
-                MessageBox.Show(i.login + " " + i.password + " " + i.typeOfAccount);
+                switch(users.First().typeOfAccount)
+                {
+                    case "Admin":
+                        MessageBox.Show("ADMIN");
+                        break;
+
+                }
+            }
+            else
+            {
+                errorLogin.Visibility = Visibility.Visible;
+                errorPassword.Visibility = Visibility.Visible;
             }
 
+        }
+
+
+
+
+
+
+
+
+        private void ShowPassword(object sender, RoutedEventArgs e)
+        {
+            showHidePassword.Content = "Скрыть пароль";
+            passwordShowTextBox.Text = passwordHideBox.Password;
+            passwordShowTextBox.Visibility = Visibility.Visible;
+            passwordHideBox.Visibility = Visibility.Hidden;
+        }
+        private void HidePassword(object sender, RoutedEventArgs e)
+        {
+            showHidePassword.Content = "Показать пароль";
+            passwordHideBox.Password = passwordShowTextBox.Text;
+            passwordShowTextBox.Visibility = Visibility.Hidden;
+            passwordHideBox.Visibility = Visibility.Visible;
+        }
+
+        private void TextChanged(object sender, RoutedEventArgs e)
+        {
+            errorLogin.Visibility = Visibility.Hidden;
+            errorPassword.Visibility = Visibility.Hidden;
         }
     }
 }

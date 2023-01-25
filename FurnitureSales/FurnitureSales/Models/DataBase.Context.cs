@@ -28,5 +28,9 @@ namespace FurnitureSales.Models
         public virtual DbSet<Accounts> Accounts { get; set; }
         public virtual DbSet<Buyers> Buyers { get; set; }
         public virtual DbSet<Workers> Workers { get; set; }
+        public virtual DbSet<Contarcts> Contarcts { get; set; }
+        public virtual DbSet<ContractsSales> ContractsSales { get; set; }
+        public virtual DbSet<Sales> Sales { get; set; }
+        public virtual DbSet<TypesOfFurnitures> TypesOfFurnitures { get; set; }
     }
 }

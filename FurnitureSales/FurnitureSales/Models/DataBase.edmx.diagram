@@ -7,10 +7,17 @@
       <Diagram DiagramId="1b79f28f3c5142a7ab7b8b58fd5e0ac0" Name="Diagram1">
         <EntityTypeShape EntityType="FurnitureDBModel.Accounts" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FurnitureDBModel.Buyers" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FurnitureDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FurnitureDBModel.Workers" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="FurnitureDBModel.FK_Buyers_Accounts" ManuallyRouted="false" />
         <AssociationConnector Association="FurnitureDBModel.FK_Workers_Accounts" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FurnitureDBModel.Contarcts" Width="1.5" PointX="5.375" PointY="9.375" />
+        <EntityTypeShape EntityType="FurnitureDBModel.ContractsSales" Width="1.5" PointX="7" PointY="6.875" />
+        <EntityTypeShape EntityType="FurnitureDBModel.Sales" Width="1.5" PointX="8.75" PointY="9.25" />
+        <EntityTypeShape EntityType="FurnitureDBModel.TypesOfFurnitures" Width="1.5" PointX="9.375" PointY="4.75" />
+        <AssociationConnector Association="FurnitureDBModel.FK_Contarcts_Buyers" />
+        <AssociationConnector Association="FurnitureDBModel.FK_ContractsSales_Contarcts" />
+        <AssociationConnector Association="FurnitureDBModel.FK_ContractsSales_TypesOfFurnitures" />
+        <AssociationConnector Association="FurnitureDBModel.FK_Sales_TypesOfFurnitures" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
