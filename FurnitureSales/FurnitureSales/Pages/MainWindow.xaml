@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:FurnitureSales"
         mc:Ignorable="d"
         Closed="Window_Closed"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="370"></RowDefinition>
+            <RowDefinition Height="370" ></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -22,5 +23,10 @@
         <Label Name="profileType"  Content="TYPE" Grid.Row="0" Grid.Column="2" Height="30" Width="100" Margin="0,0,-500,0"/>
         <Label Name="profileName" Content="NAME" Grid.Row="0" Grid.Column="2" Height="30" Width="100" Margin="0,0,-280,0"/>
         <Button  Name="butBack" Content="Back" Grid.Row="2" Margin="20,340,22,5" Click="butBack_Click" />
+        <Button Name="butSort" Content="Sort" Grid.Row="2" Margin="20,310,22,36" Click="butSort_Click"/>
+
+        <GroupBox Grid.Row="1" Grid.Column="2" Margin="5" >
+            <DataGrid Name="contractsDataGrid" CanUserAddRows="False" ColumnWidth="*"/>
+        </GroupBox>
     </Grid>
 </Window>

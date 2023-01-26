@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using FurnitureSales.Models;
 
 namespace FurnitureSales.Models
@@ -15,6 +18,8 @@ namespace FurnitureSales.Models
         public static dynamic User { get; set; }
         public static string userName { get; set; }
         public static int idAccount { get; set; }
+        public static List<string> colunsNames = new List<string>();
+        public static DataGrid cureGrid { get; set; }
 
         
         public static void Search()
@@ -37,6 +42,18 @@ namespace FurnitureSales.Models
         private  static void Window_Closed(object sender, EventArgs e)
         {
             Autorization.Close();
+        }
+        public static  void Sorting()
+        {
+            ICollectionView view =
+            CollectionViewSource.GetDefaultView(cureGrid.ItemsSource);
+            view.SortDescriptions.Clear();
+            foreach (var i in Global.colunsNames)
+            {
+                SortDescription sortingColumn = new SortDescription(i, ListSortDirection.Ascending);
+                view.SortDescriptions.Add(sortingColumn);
+            }
+            Global.colunsNames.Clear();
         }
     }
 

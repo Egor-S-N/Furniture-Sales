@@ -23,3 +23,5 @@ D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\bin\Debug\EntityFr
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\bin\Debug\EntityFramework.SqlServer.xml
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\bin\Debug\ru\EntityFramework.resources.dll
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\FurnitureSales.csproj.CopyComplete
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\SortingWindow.g.cs
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\SortingWindow.baml
