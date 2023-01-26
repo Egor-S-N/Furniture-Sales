@@ -104,7 +104,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataBase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Global.cs" />
     <Compile Include="Models\Sales.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TypesOfFurnitures.cs">
@@ -167,6 +171,9 @@
       <DependentUpon>DataBase.edmx</DependentUpon>
       <LastGenOutput>DataBase.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Admin.jpg" />
+    <Resource Include="Resources\manager.jpg" />
+    <Resource Include="Resources\buyer.jpg" />
     <Resource Include="Resources\logo.jpg" />
   </ItemGroup>
   <ItemGroup>

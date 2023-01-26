@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Image Name="profilePhoto" Margin="0,0,500,300"/>
+        <Button Name="butBack" Content="Back" Click="butBack_Click" Height="100" />
     </Grid>
 </Window>

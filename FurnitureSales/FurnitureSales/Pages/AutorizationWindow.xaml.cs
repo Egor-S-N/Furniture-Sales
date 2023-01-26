@@ -25,7 +25,7 @@ namespace FurnitureSales
         {
             
             InitializeComponent();
-
+            Global.Autorization = this;
           
         }
 
@@ -34,13 +34,19 @@ namespace FurnitureSales
             var users = from account in db.Accounts where account.login == loginTextBox.Text && account.password == passwordHideBox.Password select account;
             if (users.Count() != 0)
             {
+                //MessageBox.Show(users.First().typeOfAccount);
                 switch(users.First().typeOfAccount)
                 {
                     case "Admin":
-                        MessageBox.Show("ADMIN");
+                        Global.User = users.First();
+                        Global.TypeOfUser = users.First().typeOfAccount;
                         break;
 
                 }
+
+                MainWindow mainWindow = new MainWindow();
+                this.Hide();
+                mainWindow.Show();
             }
             else
             {

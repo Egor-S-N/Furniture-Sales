@@ -47,6 +47,16 @@
     <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="numberOfSold" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="TypesOfFurnitures">
     <Key>
       <PropertyRef Name="model" />
@@ -147,6 +157,7 @@
     <EntitySet Name="Contarcts" EntityType="Self.Contarcts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContractsSales" EntityType="Self.ContractsSales" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TypesOfFurnitures" EntityType="Self.TypesOfFurnitures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Buyers_Accounts" Association="Self.FK_Buyers_Accounts">

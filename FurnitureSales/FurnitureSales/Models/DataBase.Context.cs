@@ -32,5 +32,6 @@ namespace FurnitureSales.Models
         public virtual DbSet<ContractsSales> ContractsSales { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<TypesOfFurnitures> TypesOfFurnitures { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

@@ -18,6 +18,7 @@
         <AssociationConnector Association="FurnitureDBModel.FK_ContractsSales_Contarcts" />
         <AssociationConnector Association="FurnitureDBModel.FK_ContractsSales_TypesOfFurnitures" />
         <AssociationConnector Association="FurnitureDBModel.FK_Sales_TypesOfFurnitures" />
+        <EntityTypeShape EntityType="FurnitureDBModel.sysdiagrams" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
