@@ -38,8 +38,12 @@ namespace FurnitureSales
                 switch(users.First().typeOfAccount)
                 {
                     case "Admin":
+                        
                         Global.User = users.First();
-                        Global.TypeOfUser = users.First().typeOfAccount;
+                        Global.idAccount = users.First().idAccount;
+                        Global.Search();
+                        
+                            
                         break;
 
                 }
@@ -83,5 +87,7 @@ namespace FurnitureSales
             errorLogin.Visibility = Visibility.Hidden;
             errorPassword.Visibility = Visibility.Hidden;
         }
+
+        
     }
 }

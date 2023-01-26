@@ -24,14 +24,18 @@ namespace FurnitureSales
         public MainWindow()
         {
             InitializeComponent();
+            
             try
             {
                 BitmapImage photo = new BitmapImage();
                 photo.BeginInit();
                 
-                photo.UriSource = new Uri($"D:\\VS_PROJECTS\\Furniture-Sales-\\FurnitureSales\\FurnitureSales\\Resources\\{Global.TypeOfUser}.jpg");
+                photo.UriSource = new Uri($"D:\\VS_PROJECTS\\Furniture-Sales-\\FurnitureSales\\FurnitureSales\\Resources\\{Global.User.typeOfAccount}.jpg");
                 photo.EndInit();
                 profilePhoto.Source = photo;
+
+                profileName.Content = Global.userName;
+                profileType.Content = Global.User.typeOfAccount;
             }
             catch (Exception)
             {
@@ -44,6 +48,10 @@ namespace FurnitureSales
             this.Close();
             Global.Autorization.Show();
 
+        }
+        private  void Window_Closed(object sender, EventArgs e)
+        {
+            Global.Autorization.Close();
         }
     }
 }
