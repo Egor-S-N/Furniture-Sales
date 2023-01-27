@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureSales.Pages"
         mc:Ignorable="d"
-        Title="SortingWindow" Height="250" Width="400"
+        Title="Сортировка" Height="250" Width="400"
         ResizeMode="NoResize">
     <Grid Name="sortingGrid" >
         <Grid.RowDefinitions>

@@ -20,6 +20,8 @@ namespace FurnitureSales.Models
         public static int idAccount { get; set; }
         public static List<string> colunsNames = new List<string>();
         public static DataGrid cureGrid { get; set; }
+        public static string contractState { get; set; }
+        public static dynamic Table { get; set; }
 
         
         public static void Search()

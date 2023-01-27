@@ -2,10 +2,13 @@
 using FurnitureSales.Pages;
 using System;
 using System.ComponentModel;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace FurnitureSales
@@ -94,6 +97,29 @@ namespace FurnitureSales
 
             
 
+        }
+
+        private void butAddNewContract_Click(object sender, RoutedEventArgs e)
+        {
+            Global.contractState = "New";
+            CreateUpdateContracts createWindow = new CreateUpdateContracts();
+            createWindow.Show();
+        }
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int index = contractsDataGrid.SelectedIndex + 1;
+
+            var a = (from s in db.ContractsSales where s.id == index select s).First();
+
+            //foreach(var id in a.ToString())
+            //{
+            //    MessageBox.Show(id.ToString());
+            //}
+
+            //MessageBox.Show(a.ToString());
+            //Global.contractState = "Update";
+            //CreateUpdateContracts createWindow = new CreateUpdateContracts();
+            //createWindow.Show();
         }
     }
 }
