@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace FurnitureSales
 {
@@ -102,8 +103,9 @@ namespace FurnitureSales
         private void butAddNewContract_Click(object sender, RoutedEventArgs e)
         {
             Global.contractState = "New";
-            CreateUpdateContracts createWindow = new CreateUpdateContracts();
+            CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
             createWindow.Show();
+           
         }
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -114,8 +116,8 @@ namespace FurnitureSales
 
 
             Global.contractState = "Update";
-            CreateUpdateContracts createWindow = new CreateUpdateContracts();
-            createWindow.Show();
+            CreateUpdateWindow updateWindow = new CreateUpdateWindow("Contracts");
+            updateWindow.Show();
         }
     }
 }

@@ -69,6 +69,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\CreateUpdateContractsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateUpdateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CreateUpdateContractsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +131,12 @@
     </Compile>
     <Compile Include="Pages\AutorizationWindow.xaml.cs">
       <DependentUpon>AutorizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateUpdateContractsPage.xaml.cs">
+      <DependentUpon>CreateUpdateContractsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateUpdateWindow.xaml.cs">
+      <DependentUpon>CreateUpdateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CreateUpdateContractsWindow.xaml.cs">
       <DependentUpon>CreateUpdateContractsWindow.xaml</DependentUpon>

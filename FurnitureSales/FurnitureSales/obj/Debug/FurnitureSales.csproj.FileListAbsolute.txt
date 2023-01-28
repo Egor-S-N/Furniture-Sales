@@ -27,3 +27,7 @@ D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\So
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\SortingWindow.baml
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateContractsWindow.g.cs
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateContractsWindow.baml
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateContractsPage.g.cs
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateWindow.g.cs
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateContractsPage.baml
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateWindow.baml

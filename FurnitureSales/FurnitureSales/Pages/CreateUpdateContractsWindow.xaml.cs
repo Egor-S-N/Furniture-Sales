@@ -28,35 +28,31 @@ namespace FurnitureSales.Pages
             if (Global.contractState == "New")
             {
                 this.Title = "Создание нового заказа";
-                var values = (from table in db.TypesOfFurnitures select table.model).ToList();
-                foreach(string item in values)
-                {
-                    ComboBoxItem comboBox = new ComboBoxItem();
-                    comboBox.Content = item;
-                    COMBO.Items.Add(comboBox);
-                }
-                //ComboBox comboBox = new ComboBox();
-                //Grid.SetRow(comboBox, 0);
-                //Grid.SetColumn(comboBox, 0);
-                //COMBO.ItemsSource = values;
-                //foreach (var value in values)
-                //{
-                //    //ComboBoxItem comboBoxItem = new ComboBoxItem();
-                //    //comboBoxItem.Content = value.ToString();
-                //    comboBox.Items.Add(value.ToString());
-                //}
-                
-
-
-
+                AddComboBox();
+               
             }
             if (Global.contractState == "Update")
             {
                 this.Title = "Изменение существующего заказа";
-                var contarcts = (Contarcts)Global.Table;
-                
             }
 
+
+        }
+
+        private void AddComboBox()
+        {
+            var values = (from table in db.TypesOfFurnitures select table.model).ToList();
+
+            ComboBox combo = new ComboBox();
+            combo.Width = 100;
+            combo.Height = 30;
+            Pole.Children.Add(combo);
+            foreach (string item in values)
+            {
+                ComboBoxItem comboBox = new ComboBoxItem();
+                comboBox.Content = item;
+                combo.Items.Add(comboBox);
+            }
 
         }
     }
