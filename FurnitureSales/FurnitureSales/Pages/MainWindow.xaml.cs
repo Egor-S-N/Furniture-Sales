@@ -108,18 +108,14 @@ namespace FurnitureSales
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             int index = contractsDataGrid.SelectedIndex + 1;
+            
+            Global.Table = (from s in db.Contarcts where s.idContract == index select s).First();
 
-            var a = (from s in db.ContractsSales where s.id == index select s).First();
 
-            //foreach(var id in a.ToString())
-            //{
-            //    MessageBox.Show(id.ToString());
-            //}
 
-            //MessageBox.Show(a.ToString());
-            //Global.contractState = "Update";
-            //CreateUpdateContracts createWindow = new CreateUpdateContracts();
-            //createWindow.Show();
+            Global.contractState = "Update";
+            CreateUpdateContracts createWindow = new CreateUpdateContracts();
+            createWindow.Show();
         }
     }
 }

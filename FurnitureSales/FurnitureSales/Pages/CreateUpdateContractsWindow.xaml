@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:FurnitureSales.Pages"
         mc:Ignorable="d"
         Title="CreateUpdateContracts" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Name="Pole">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ComboBox Name="COMBO" Width="100" Height="30"/>
     </Grid>
 </Window>
