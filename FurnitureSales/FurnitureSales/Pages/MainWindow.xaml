@@ -25,6 +25,7 @@
         <Button  Name="butBack" Content="Back" Grid.Row="2" Margin="20,340,22,5" Click="butBack_Click" />
         <Button Name="butSort" Content="Sort" Grid.Row="2" Margin="20,310,22,36" Click="butSort_Click"/>
         <Button Name="butAddNewContract" Content="New contract" Grid.Row="2" Margin="20,280,22,67" Click="butAddNewContract_Click"/>
+        <Button Name="butDelContract" Content="Delete contract" Grid.Row="2" Margin="20,250,22,98" Click="butDelContract_Click"/>
 
         <GroupBox Grid.Row="1" Grid.Column="2" Margin="5" >
             <DataGrid Name="contractsDataGrid" CanUserAddRows="False" ColumnWidth="*">
@@ -32,6 +33,7 @@
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
                     </Style>
+                        
                 </DataGrid.ItemContainerStyle>
             </DataGrid>
         </GroupBox>

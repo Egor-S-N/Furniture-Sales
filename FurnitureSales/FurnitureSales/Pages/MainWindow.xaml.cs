@@ -107,17 +107,46 @@ namespace FurnitureSales
             createWindow.Show();
            
         }
+       
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             int index = contractsDataGrid.SelectedIndex + 1;
+            var result = MessageBox.Show(index.ToString(), "Delete contract", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                try
+                {
+
+                var contract = (from table in db.Contarcts where table.idContract == index select table).First();
+                var values = from table in db.ContractsSales where table.idContract == index select table;
+                foreach(var item in values)
+                {
+                    db.ContractsSales.Remove(item);
+                }
+                db.Contarcts.Remove(contract);
+                db.SaveChanges();
+                MessageBox.Show("DELETED");
+                    RefreshgGrid();
+                }
+                catch
+                {
+                    MessageBox.Show("ERR");
+                }
+            }
+            //int index = contractsDataGrid.SelectedIndex + 1;
             
-            Global.Table = (from s in db.Contarcts where s.idContract == index select s).First();
+            //Global.Table = (from s in db.Contarcts where s.idContract == index select s).First();
 
 
 
-            Global.contractState = "Update";
-            CreateUpdateWindow updateWindow = new CreateUpdateWindow("Contracts");
-            updateWindow.Show();
+            //Global.contractState = "Update";
+            //CreateUpdateWindow updateWindow = new CreateUpdateWindow("Contracts");
+            //updateWindow.Show();
+        }
+
+        private void butDelContract_Click(object sender, RoutedEventArgs e)
+        {
+            string a = null;
         }
     }
 }
