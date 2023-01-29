@@ -22,45 +22,42 @@ namespace FurnitureSales.Pages
     public partial class CreateUpdateContractsPage : Page
     {
         private List<ComboBox> comboBoxes = new List<ComboBox>();
-        int rowIndex = 0, columnIndex = 2;
+        private List<TextBox> textBoxes = new List<TextBox>();
+        int rowIndex = 1, columnIndex = 0;
 
 
         FurnitureDBEntities db = new FurnitureDBEntities();
         public CreateUpdateContractsPage()
         {
             InitializeComponent();
+            AddComboBox();
         }
 
         private void AddTypes_Click(object sender, RoutedEventArgs e)
         {
             AddComboBox();
+            
         }
 
         private void AddComboBox()
         {
-
-            
-           
-                if (columnIndex < 3)
-                {
-                    columnIndex += 1;
-                }
-                else
-                {
-                    columnIndex = 0;
-                    rowIndex += 1;
-
-                    ContractsGrid.RowDefinitions.Add(new RowDefinition());
-                }
-
-                var values = (from table in db.TypesOfFurnitures select table.model).ToList();
+            var values = (from table in db.TypesOfFurnitures select table.model).ToList();
 
                 ComboBox combo = new ComboBox();
+                TextBox tb = new TextBox();
+                
                 Grid.SetRow(combo, rowIndex);
                 Grid.SetColumn(combo, columnIndex);
-                combo.Height = 40;
+
+            tb.Width = 150;
+            tb.Height = 40;
+            Grid.SetRow(tb, rowIndex);
+            Grid.SetColumn(tb, columnIndex + 1);
+            combo.Height = 40;
                 combo.Width = 150;
                 ContractsGrid.Children.Add(combo);
+            ContractsGrid.Children.Add(tb);
+            textBoxes.Add(tb);  
                 foreach (string item in values)
                 {
                     ComboBoxItem comboBox = new ComboBoxItem();
@@ -69,8 +66,72 @@ namespace FurnitureSales.Pages
                     combo.Items.Add(comboBox);
                 }
                 comboBoxes.Add(combo);
-           
 
+
+            if (columnIndex < 2)
+            {
+                columnIndex += 2;
+            }
+            else
+            {
+                columnIndex = 0;
+                rowIndex += 1;
+
+                ContractsGrid.RowDefinitions.Add(new RowDefinition());
+            }
+
+        }
+
+        private void butAddToDataBase_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+
+                int idContract = db.Contarcts.Max(x => x.idContract) + 1;
+
+                db.Contarcts.Add(new Contarcts
+                {
+                    idContract = idContract,
+                    idBuyer = 1,
+                    registrationDate = DateTime.Now,
+                    dueDate = DueDate.SelectedDate.Value.Date,
+                    order = idContract
+                });
+
+                
+
+
+                for (int i = 0; i < comboBoxes.Count; i++)
+                {
+                    int idCS = db.ContractsSales.Max(x => x.id) + 1;
+                    db.ContractsSales.Add(new ContractsSales
+                    {
+                        id = idCS,
+                        idContract = idContract,
+                        TypeOfFurniture = AddToDB(i).Item1,
+                        count = AddToDB(i).Item2
+                    });
+                    db.SaveChanges();
+                }
+                MessageBox.Show("Success");
+                Global.cureGrid.Items.Refresh();
+            }
+            catch
+            {
+                MessageBox.Show("Error");
+            }
+        }
+
+        private Tuple<string, int> AddToDB(int id)
+        {
+            int value;
+            if(Int32.TryParse(textBoxes[id].Text, out value))
+            {
+                ComboBoxItem typeItem = (ComboBoxItem)comboBoxes[id].SelectedItem;
+                return new Tuple<string, int>(typeItem.Content.ToString(), value);
+            }
+            return null;
         }
     }
 
