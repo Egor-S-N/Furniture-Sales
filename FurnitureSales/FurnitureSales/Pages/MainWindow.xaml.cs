@@ -148,5 +148,10 @@ namespace FurnitureSales
         {
             string a = null;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshgGrid();
+        }
     }
 }
