@@ -59,14 +59,15 @@ namespace FurnitureSales
 
         private void RefreshgGrid()
         {
+            db = new FurnitureDBEntities();
             db.Contarcts.Load();
-            
+
             contractsDataGrid.ItemsSource = db.Contarcts.Local.Select(x => new
             {
                 ID = x.idContract,
-                Покупатель = (from org in db.Buyers where org.idBuyer == x.idBuyer select org).First().nameOfOrganization,
+                Покупатель = (from org in db.Buyers where org.idBuyer == x.idBuyer select org.nameOfOrganization).First(),
                 ДатаРегистрации = x.registrationDate.ToString("dd/MM/yyyy"),
-                ДатаИсполнения= x.dueDate.ToString("dd/MM/yyyy"),
+                ДатаИсполнения = x.dueDate.ToString("dd/MM/yyyy"),
                 ЗАКАЗ = Orders(x.order)
             }).ToList();
 
@@ -140,6 +141,7 @@ namespace FurnitureSales
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            contractsDataGrid.Items.Refresh();
             RefreshgGrid();
         }
 

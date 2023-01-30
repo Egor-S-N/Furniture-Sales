@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using FurnitureSales.Models;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace FurnitureSales.Pages
 {
@@ -30,9 +31,9 @@ namespace FurnitureSales.Pages
         public CreateUpdateContractsPage()
         {
             InitializeComponent();
-            if(Global.TableState == "New")
+            if (Global.TableState == "New")
             {
-            AddComboBox();
+                AddComboBox();
             }
             else if (Global.TableState == "Update")
             {
@@ -40,7 +41,7 @@ namespace FurnitureSales.Pages
                 DueDate.SelectedDate = contracts.dueDate;
                 var sales = (from sale in db.ContractsSales where sale.idContract == Global.Index select sale).ToList();
                 var products = (from table in db.TypesOfFurnitures select table).ToList();
-                for (int i =0; i < sales.Count(); i ++)
+                for (int i = 0; i < sales.Count(); i++)
                 {
 
                     MessageBox.Show(sales[i].TypeOfFurniture + "\n" + sales[i].id.ToString());
@@ -49,10 +50,12 @@ namespace FurnitureSales.Pages
 
                     textBoxes[i].Text = sales[i].count.ToString();
                 }
-               
+                butAddToDataBase.Content = "Update contract";
+                butAddToDataBase.Click -= butAddToDataBase_Click;
+                butAddToDataBase.Click += butUpdateDataBase_Click;
 
-            }    
-           
+            }
+
         }
 
         private void AddTypes_Click(object sender, RoutedEventArgs e)
@@ -64,29 +67,29 @@ namespace FurnitureSales.Pages
         {
             var values = (from table in db.TypesOfFurnitures select table.model).ToList();
 
-                ComboBox combo = new ComboBox();
-                TextBox tb = new TextBox();
-                
-                Grid.SetRow(combo, rowIndex);
-                Grid.SetColumn(combo, columnIndex);
+            ComboBox combo = new ComboBox();
+            TextBox tb = new TextBox();
+
+            Grid.SetRow(combo, rowIndex);
+            Grid.SetColumn(combo, columnIndex);
 
             tb.Width = 150;
             tb.Height = 40;
             Grid.SetRow(tb, rowIndex);
             Grid.SetColumn(tb, columnIndex + 1);
             combo.Height = 40;
-                combo.Width = 150;
-                ContractsGrid.Children.Add(combo);
+            combo.Width = 150;
+            ContractsGrid.Children.Add(combo);
             ContractsGrid.Children.Add(tb);
-            textBoxes.Add(tb);  
-                foreach (string item in values)
-                {
-                    ComboBoxItem comboBox = new ComboBoxItem();
-                    comboBox.Content = item;
+            textBoxes.Add(tb);
+            foreach (string item in values)
+            {
+                ComboBoxItem comboBox = new ComboBoxItem();
+                comboBox.Content = item;
 
-                    combo.Items.Add(comboBox);
-                }
-                comboBoxes.Add(combo);
+                combo.Items.Add(comboBox);
+            }
+            comboBoxes.Add(combo);
 
 
             if (columnIndex < 2)
@@ -120,7 +123,7 @@ namespace FurnitureSales.Pages
                     order = idContract
                 });
 
-                
+
 
 
                 for (int i = 0; i < comboBoxes.Count; i++)
@@ -137,7 +140,7 @@ namespace FurnitureSales.Pages
                 }
                 MessageBox.Show("Success");
                 Global.cureGrid.Items.Refresh();
-            }
+            }   
             catch
             {
                 MessageBox.Show("Error");
@@ -147,13 +150,55 @@ namespace FurnitureSales.Pages
         private Tuple<string, int> AddToDB(int id)
         {
             int value;
-            if(Int32.TryParse(textBoxes[id].Text, out value))
+            if (Int32.TryParse(textBoxes[id].Text, out value))
             {
                 ComboBoxItem typeItem = (ComboBoxItem)comboBoxes[id].SelectedItem;
                 return new Tuple<string, int>(typeItem.Content.ToString(), value);
             }
             return null;
         }
-    }
+        private void butUpdateDataBase_Click(object sender, RoutedEventArgs e)
+        {   
+            
+            var contract = (from table in db.Contarcts where table.idContract == Global.Index select table).First();
+            contract.dueDate = DueDate.SelectedDate.Value.Date;
+            db.Entry(contract).State = EntityState.Modified;
+            for (int i = 0; i < comboBoxes.Count; i ++)
+            {
+                ComboBoxItem typeItem = (ComboBoxItem)comboBoxes[i].SelectedItem;
+                var item = typeItem.Content.ToString();
+                MessageBox.Show(item);
+                var CS = db.ContractsSales.Where(x => x.TypeOfFurniture == item && x.idContract == Global.Index);
+                if (CS.Count() != 0)
+                {
+                    var cs = CS.First();
+                    cs.TypeOfFurniture = item;
+                    cs.count = Convert.ToInt32(textBoxes[i].Text);
+                    db.Entry(cs).State = EntityState.Modified;
+                }
+                else
+                {
+                    db.ContractsSales.Add(new ContractsSales
+                    {
+                        id = db.ContractsSales.Max(x => x.id) + 1,
+                        idContract = Global.Index,
+                        TypeOfFurniture = item,
+                        count = Convert.ToInt32(textBoxes[i].Text)
+                    });
 
+                }
+            }
+
+            try
+            {
+
+                db.SaveChanges();
+                MessageBox.Show("SaveSuccess");
+            }
+            catch
+            {
+                MessageBox.Show("ERR");
+            }
+        }
+    }
 }
