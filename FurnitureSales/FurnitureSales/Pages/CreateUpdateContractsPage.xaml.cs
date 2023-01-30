@@ -30,13 +30,34 @@ namespace FurnitureSales.Pages
         public CreateUpdateContractsPage()
         {
             InitializeComponent();
+            if(Global.TableState == "New")
+            {
             AddComboBox();
+            }
+            else if (Global.TableState == "Update")
+            {
+                var contracts = (from cont in db.Contarcts where cont.idContract == Global.Index select cont).First();
+                DueDate.SelectedDate = contracts.dueDate;
+                var sales = (from sale in db.ContractsSales where sale.idContract == Global.Index select sale).ToList();
+                var products = (from table in db.TypesOfFurnitures select table).ToList();
+                for (int i =0; i < sales.Count(); i ++)
+                {
+
+                    MessageBox.Show(sales[i].TypeOfFurniture + "\n" + sales[i].id.ToString());
+                    AddComboBox();
+                    comboBoxes[i].Text = sales[i].TypeOfFurniture;
+
+                    textBoxes[i].Text = sales[i].count.ToString();
+                }
+               
+
+            }    
+           
         }
 
         private void AddTypes_Click(object sender, RoutedEventArgs e)
         {
             AddComboBox();
-            
         }
 
         private void AddComboBox()

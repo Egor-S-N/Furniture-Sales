@@ -71,7 +71,6 @@ namespace FurnitureSales
             }).ToList();
 
 
-
             contractsDataGrid.Items.Refresh();
         }
 
@@ -105,7 +104,7 @@ namespace FurnitureSales
 
         private void butAddNewContract_Click(object sender, RoutedEventArgs e)
         {
-            Global.contractState = "New";
+            Global.TableState = "New";
             CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
             createWindow.Show();
            
@@ -151,8 +150,10 @@ namespace FurnitureSales
 
         private void butUpdateContract_Click(object sender, RoutedEventArgs e)
         {
-            var a = (from s in db.Contarcts where s.idContract == Index select s).First();
-            MessageBox.Show(a.ToString());
+            Global.Index = Index;
+            Global.TableState = "Update";
+            CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
+            createWindow.Show();
         }
     }
 }

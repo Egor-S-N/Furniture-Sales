@@ -36,13 +36,13 @@ namespace FurnitureSales.Pages
 
 
 
-            if (Global.contractState == "New")
+            if (Global.TableState == "New")
             {
                 this.Title = $"Add new {tableName}";
                 //AddComboBox();
 
             }
-            if (Global.contractState == "Update")
+            if (Global.TableState == "Update")
             {
                 this.Title = $"Update current {tableName}";
             }
