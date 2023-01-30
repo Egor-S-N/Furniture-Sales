@@ -26,13 +26,15 @@
         <Button Name="butSort" Content="Sort" Grid.Row="2" Margin="20,310,22,36" Click="butSort_Click"/>
         <Button Name="butAddNewContract" Content="New contract" Grid.Row="2" Margin="20,280,22,67" Click="butAddNewContract_Click"/>
         <Button Name="butDelContract" Content="Delete contract" Grid.Row="2" Margin="20,250,22,98" Click="butDelContract_Click"/>
+        
+        <Button Name="butUpdateContract" Content="Update contract" Grid.Row="2" Margin="20,220,22,129" Click="butUpdateContract_Click"/>
 
         <GroupBox Grid.Row="1" Grid.Column="2" Margin="5,5,5,40" >
             <StackPanel>
                 <DataGrid Margin="0,0,0,-280" Name="contractsDataGrid" CanUserAddRows="False" ColumnWidth="*">
                     <DataGrid.ItemContainerStyle>
                         <Style TargetType="DataGridRow">
-                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                            <EventSetter Event="MouseDown" Handler="DataGridRow_MouseDown"/>
                         </Style>
 
                     </DataGrid.ItemContainerStyle>
