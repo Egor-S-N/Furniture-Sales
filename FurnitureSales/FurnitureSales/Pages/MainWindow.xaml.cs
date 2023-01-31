@@ -19,6 +19,7 @@ namespace FurnitureSales
     /// </summary>
     public partial class MainWindow : Window
     {
+        string name = string.Empty;
         FurnitureDBEntities db = new FurnitureDBEntities();
         private int Index;
         public MainWindow()
@@ -184,7 +185,8 @@ namespace FurnitureSales
         //double click choise row 
         private void DataGridRow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Index = contractsDataGrid.SelectedIndex + 1;
+            Index = Global.cureGrid.SelectedIndex + 1;
+            MessageBox.Show(name + "\n" + Index.ToString());
         }
 
         //udapte contracts
@@ -203,6 +205,10 @@ namespace FurnitureSales
 
             //change datagrid
             TabItem ti = TabCCC.SelectedItem as TabItem;
+            if (name != ti.Header.ToString())
+            {
+
+            name = ti.Header.ToString();
             switch(ti.Header)
             {
                 case "Contracts":
@@ -264,6 +270,9 @@ namespace FurnitureSales
                     Global.cureGrid = buyersDataGrid;
                     break;
             }
+            }
         }
+
+       
     }
 }

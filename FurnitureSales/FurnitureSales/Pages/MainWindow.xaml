@@ -90,7 +90,6 @@
                                     <Style TargetType="DataGridRow">
                                         <EventSetter Event="MouseDown" Handler="DataGridRow_MouseDown"/>
                                     </Style>
-
                                 </DataGrid.ItemContainerStyle>
                             </DataGrid>
                             <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="Button_Click"/>
