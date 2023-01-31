@@ -27,19 +27,38 @@ namespace FurnitureSales
             RefreshgGrid();
             Global.cureWindow = this;
             Global.cureGrid = contractsDataGrid;
-            
-                BitmapImage photo = new BitmapImage();
-                photo.BeginInit();
 
-                photo.UriSource = new Uri($"D:\\VS_PROJECTS\\Furniture-Sales-\\FurnitureSales\\FurnitureSales\\Resources\\{Global.User.typeOfAccount}.jpg");
-                photo.EndInit();
-                profilePhoto.Source = photo;
+            BitmapImage photo = new BitmapImage();
+            photo.BeginInit();
 
-                profileName.Content = Global.userName;
-                profileType.Content = Global.User.typeOfAccount;
-           
+            photo.UriSource = new Uri($"D:\\VS_PROJECTS\\Furniture-Sales-\\FurnitureSales\\FurnitureSales\\Resources\\{Global.User.typeOfAccount}.jpg");
+            photo.EndInit();
+            profilePhoto.Source = photo;
+
+            profileName.Content = Global.userName;
+            profileType.Content = Global.User.typeOfAccount;
+
+
+            if (Global.User.typeOfAccount == "Organization")
+            {
+                WorkersTI.Visibility = Visibility.Hidden;
+                SalesTI.Visibility = Visibility.Hidden;
+                BuyersTI.Visibility = Visibility.Hidden;
+                BuyerPanel.Visibility = Visibility.Visible;
+            }
+            else if (Global.User.typeOfAccount == "Manager")
+            {
+                WorkersTI.Visibility = Visibility.Hidden;
+                BuyersTI.Visibility = Visibility.Hidden;
+                ManagerPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                AdminPanel.Visibility = Visibility.Visible;
+            }
+
         }
-
+        //go back to autorization 
         private void butBack_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
@@ -47,31 +66,49 @@ namespace FurnitureSales
             //Global.cureWindow.Close();
 
         }
+
+        //closing window
         private void Window_Closed(object sender, EventArgs e)
         {
             Environment.Exit(0);
 
-            
+
         }
 
+
+        //refreshing contractsGrid
         private void RefreshgGrid()
         {
             db = new FurnitureDBEntities();
             db.Contarcts.Load();
-
-            contractsDataGrid.ItemsSource = db.Contarcts.Local.Select(x => new
+            if (Global.User.typeOfAccount == "Organization")
             {
-                ID = x.idContract,
-                Покупатель = (from org in db.Buyers where org.idBuyer == x.idBuyer select org.nameOfOrganization).First(),
-                ДатаРегистрации = x.registrationDate.ToString("dd/MM/yyyy"),
-                ДатаИсполнения = x.dueDate.ToString("dd/MM/yyyy"),
-                ЗАКАЗ = Orders(x.order)
-            }).ToList();
+                contractsDataGrid.ItemsSource = db.Contarcts.Local.Select(x => new
+                {
+                    ID = x.idContract,
+                    Organization = (from org in db.Buyers where org.idBuyer == x.idBuyer select org.nameOfOrganization).First(),
+                    RegisterDate = x.registrationDate.ToString("dd/MM/yyyy"),
+                    DueDate = x.dueDate.ToString("dd/MM/yyyy"),
+                    Order = Orders(x.order)
+                }).Where(x => x.Organization == Global.userName).ToList();
+            }
+            else
+            {
+                contractsDataGrid.ItemsSource = db.Contarcts.Local.Select(x => new
+                {
+                    ID = x.idContract,
+                    Organization = (from org in db.Buyers where org.idBuyer == x.idBuyer select org.nameOfOrganization).First(),
+                    RegisterDate = x.registrationDate.ToString("dd/MM/yyyy"),
+                    DueDate = x.dueDate.ToString("dd/MM/yyyy"),
+                    Order = Orders(x.order)
+                }).ToList();
+            }
 
 
             contractsDataGrid.Items.Refresh();
         }
 
+        //set orders for all contracts
         private string Orders(int id)
         {
             string res = "";
@@ -83,11 +120,13 @@ namespace FurnitureSales
             return res;
         }
 
+
+        //multisorting click
         private void butSort_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Global.colunsNames.Clear();
-            foreach(var item in contractsDataGrid.Columns)
+            foreach (var item in Global.cureGrid.Columns)
             {
                 Global.colunsNames.Add(item.Header.ToString());
             }
@@ -96,20 +135,20 @@ namespace FurnitureSales
             sortingWindow.Show();
 
 
-            
+
 
         }
-
+        //new contract
         private void butAddNewContract_Click(object sender, RoutedEventArgs e)
         {
             Global.TableState = "New";
             CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
             createWindow.Show();
-           
-        }
-       
-        
 
+        }
+
+
+        //delete contracts
         private void butDelContract_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show(Index.ToString(), "Delete contract", MessageBoxButton.OKCancel);
@@ -135,24 +174,96 @@ namespace FurnitureSales
                 }
             }
         }
-
+        //refresh click
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             contractsDataGrid.Items.Refresh();
             RefreshgGrid();
         }
 
+        //double click choise row 
         private void DataGridRow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Index = contractsDataGrid.SelectedIndex + 1;
         }
 
+        //udapte contracts
         private void butUpdateContract_Click(object sender, RoutedEventArgs e)
         {
             Global.Index = Index;
             Global.TableState = "Update";
             CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
             createWindow.Show();
+        }
+
+
+        //change tables
+        private void TabCCC_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            //change datagrid
+            TabItem ti = TabCCC.SelectedItem as TabItem;
+            switch(ti.Header)
+            {
+                case "Contracts":
+                    Global.cureGrid = contractsDataGrid;
+                    break;
+
+                case "Models":
+                    db.TypesOfFurnitures.Load();
+                    modelsDataGrid.ItemsSource = db.TypesOfFurnitures.Local.Select(x=> new
+                    {
+                        Model = x.model,
+                        Name = x.furnitureName,
+                        Sizes = x.furnitureCharacteristics,
+                        Price = x.price.ToString() + " $"
+
+                    }).ToList();
+                    Global.cureGrid = modelsDataGrid;
+                    break;
+                case "Sales":
+                    db.Sales.Load();
+                    SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
+                    {
+                        ID = x.idSale,
+                        Name = x.furnitureName,
+                        Model = x.model,
+                        SoldCount = x.numberOfSold
+
+                    }).ToList();
+                    Global.cureGrid = SalesDataGrid;
+                    break;
+
+                case "Workers":
+                    db.Workers.Load();
+                    workersDataGrid.ItemsSource = db.Workers.Local.Select(x => new
+                    {
+                        ID = x.idWorker,
+                        Surname = x.surname,
+                        Name = x.name,
+                        Patronymic = x.patronymic,
+                        Post = x.post,
+                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                    }).ToList();
+                    Global.cureGrid = workersDataGrid;
+                    break;
+
+                case "Buyers":
+                    db.Buyers.Load();
+                    buyersDataGrid.ItemsSource = db.Buyers.Local.Select(x => new
+                    {
+                        ID = x.idBuyer,
+                        Organization = x.nameOfOrganization,
+                        Adress = x.adress,
+                        Phone = x.phone,
+                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                    }).ToList();
+                    Global.cureGrid = buyersDataGrid;
+                    break;
+            }
+
         }
     }
 }

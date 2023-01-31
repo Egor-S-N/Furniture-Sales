@@ -39,7 +39,6 @@ namespace FurnitureSales.Models
                else if (User.typeOfAccount == "Organization")
                 {
                     userName = (from buyer in db.Buyers where buyer.codeAccount == idAccount select buyer).First().nameOfOrganization;
-                    MessageBox.Show(userName);
                 }
 
             }

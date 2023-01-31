@@ -44,7 +44,6 @@ namespace FurnitureSales.Pages
                 for (int i = 0; i < sales.Count(); i++)
                 {
 
-                    MessageBox.Show(sales[i].TypeOfFurniture + "\n" + sales[i].id.ToString());
                     AddComboBox();
                     comboBoxes[i].Text = sales[i].TypeOfFurniture;
 
@@ -167,7 +166,6 @@ namespace FurnitureSales.Pages
             {
                 ComboBoxItem typeItem = (ComboBoxItem)comboBoxes[i].SelectedItem;
                 var item = typeItem.Content.ToString();
-                MessageBox.Show(item);
                 var CS = db.ContractsSales.Where(x => x.TypeOfFurniture == item && x.idContract == Global.Index);
                 if (CS.Count() != 0)
                 {
