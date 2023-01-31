@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreateUpdateContractsPage"
       Background="White">
-    <Grid Name="ContractsGrid" ShowGridLines="True">
+    <Grid Name="ContractsGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition ></RowDefinition>
@@ -19,7 +19,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Ниже выберите нужные товары и укажите количество" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <ComboBox Name="CBBuyers" Grid.Column="1" Grid.Row="0" Margin="20,11,30,11" Visibility="Hidden"/>
+        <Label Content="Ниже выберите нужные товары и укажите количество" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,0,-170,0" VerticalAlignment="Center" FontSize="16"/>
         <Label Content="Дата исполнения договора" Margin="15,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <DatePicker Name="DueDate"  Grid.Row="0" Grid.Column="0" BorderBrush="Black" Margin="13,10"/>
         <Button Name="AddTypes" Content="+"  Width="150" Click="AddTypes_Click" Margin="10" Grid.Row="100" Grid.Column="1" Grid.ColumnSpan="1" Height="40" VerticalAlignment="Bottom"/>

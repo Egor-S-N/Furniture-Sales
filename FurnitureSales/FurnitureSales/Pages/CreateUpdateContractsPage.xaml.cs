@@ -31,6 +31,19 @@ namespace FurnitureSales.Pages
         public CreateUpdateContractsPage()
         {
             InitializeComponent();
+
+            if (Global.User.typeOfAccount == "Admin")
+            {
+                CBBuyers.Visibility = Visibility.Visible;
+                var values = (from table in db.Buyers select table.nameOfOrganization).ToList();
+                foreach (string item in values)
+                {
+                    ComboBoxItem comboBox = new ComboBoxItem();
+                    comboBox.Content = item;
+
+                    CBBuyers.Items.Add(comboBox);
+                }
+            }
             if (Global.TableState == "New")
             {
                 AddComboBox();
@@ -113,10 +126,24 @@ namespace FurnitureSales.Pages
 
                 int idContract = db.Contarcts.Max(x => x.idContract) + 1;
 
+                int idB = 0;
+                var a = db.Accounts.First();
+                if (Global.User.typeOfAccount == "Organization")
+                {
+                    idB = (from table in db.Buyers where table.codeAccount == Global.idAccount select table.idBuyer).First();
+                }
+                else
+                {
+                    ComboBoxItem typeItem = (ComboBoxItem)CBBuyers.SelectedItem;
+                    
+                    idB = (from table in db.Buyers where table.nameOfOrganization == typeItem.Content.ToString() select table.idBuyer).First();
+                }
+
+
                 db.Contarcts.Add(new Contarcts
                 {
                     idContract = idContract,
-                    idBuyer = 1,
+                    idBuyer = idB,
                     registrationDate = DateTime.Now,
                     dueDate = DueDate.SelectedDate.Value.Date,
                     order = idContract

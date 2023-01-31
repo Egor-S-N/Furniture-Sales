@@ -34,10 +34,8 @@
             <Button Name="butUpdate" Content="Update" Grid.Row="2" Height="25" Margin="20,0,22,5"  Click="butUpdateContract_Click"/>
         </StackPanel>
 
-        <StackPanel Name="BuyerPanel" Grid.Row="2" Grid.Column="0" Visibility="Hidden" >
-            <Button  Content="New" Grid.Row="2"  Height="25" Margin="20,220,22,5"  Click="butAddNewContract_Click"/>
-            <Button Content="Delete" Grid.Row="2" Height="25" Margin="20,0,22,5" Click="butDelContract_Click"/>
-            <Button Content="Update" Grid.Row="2" Height="25" Margin="20,0,22,5"  Click="butUpdateContract_Click"/>
+        <StackPanel Name="BuyerPanel" Grid.Row="2" Grid.Column="0" Visibility="Visible" >
+            <Button  Content="New contract" Grid.Row="2"  Height="25" Margin="20,280,22,5"  Click="butAddNewContract_Click"/>
         </StackPanel>
         
         <StackPanel Name="ManagerPanel" Grid.Row="2" Grid.Column="0" Visibility="Hidden" >

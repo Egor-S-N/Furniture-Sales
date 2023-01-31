@@ -221,6 +221,7 @@ namespace FurnitureSales
                     }).ToList();
                     Global.cureGrid = modelsDataGrid;
                     break;
+
                 case "Sales":
                     db.Sales.Load();
                     SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
@@ -263,7 +264,6 @@ namespace FurnitureSales
                     Global.cureGrid = buyersDataGrid;
                     break;
             }
-
         }
     }
 }
