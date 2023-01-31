@@ -25,9 +25,9 @@ namespace FurnitureSales
         {
             InitializeComponent();
             RefreshgGrid();
+            Global.cureWindow = this;
             Global.cureGrid = contractsDataGrid;
-            try
-            {
+            
                 BitmapImage photo = new BitmapImage();
                 photo.BeginInit();
 
@@ -37,22 +37,19 @@ namespace FurnitureSales
 
                 profileName.Content = Global.userName;
                 profileType.Content = Global.User.typeOfAccount;
-            }
-            catch (Exception)
-            {
-
-            }
+           
         }
 
         private void butBack_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
             Global.Autorization.Show();
+            //Global.cureWindow.Close();
 
         }
         private void Window_Closed(object sender, EventArgs e)
         {
-            Global.Autorization.Close();
+            Environment.Exit(0);
 
             
         }

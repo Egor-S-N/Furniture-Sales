@@ -15,6 +15,7 @@ namespace FurnitureSales.Models
     {
         static FurnitureDBEntities db = new FurnitureDBEntities();
         public static Window Autorization;
+        public static Window cureWindow;
         public static dynamic User { get; set; }
         public static string userName { get; set; }
         public static int idAccount { get; set; }
@@ -38,13 +39,14 @@ namespace FurnitureSales.Models
                else if (User.typeOfAccount == "Organization")
                 {
                     userName = (from buyer in db.Buyers where buyer.codeAccount == idAccount select buyer).First().nameOfOrganization;
+                    MessageBox.Show(userName);
                 }
 
             }
         }
-        private  static void Window_Closed(object sender, EventArgs e)
+        public  static void Window_Closed(object sender, EventArgs e)
         {
-            Autorization.Close();
+            Environment.Exit(0);
         }
         public static  void Sorting()
         {

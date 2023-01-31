@@ -162,6 +162,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EntityDeploy Include="Models\DataBase.edmx">
@@ -194,7 +195,7 @@
     </Content>
     <Resource Include="Resources\Admin.jpg" />
     <Resource Include="Resources\manager.jpg" />
-    <Resource Include="Resources\buyer.jpg" />
+    <Resource Include="Resources\Organization.jpg" />
     <Resource Include="Resources\logo.jpg" />
   </ItemGroup>
   <ItemGroup>

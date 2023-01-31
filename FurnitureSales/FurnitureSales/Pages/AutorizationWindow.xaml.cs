@@ -26,6 +26,7 @@ namespace FurnitureSales
             
             InitializeComponent();
             Global.Autorization = this;
+            this.Closed += Global.Window_Closed;
           
         }
 
@@ -34,19 +35,9 @@ namespace FurnitureSales
             var users = from account in db.Accounts where account.login == loginTextBox.Text && account.password == passwordHideBox.Password select account;
             if (users.Count() != 0)
             {
-                //MessageBox.Show(users.First().typeOfAccount);
-                switch(users.First().typeOfAccount)
-                {
-                    case "Admin":
-                        
-                        Global.User = users.First();
-                        Global.idAccount = users.First().idAccount;
-                        Global.Search();
-                        
-                            
-                        break;
-
-                }
+                Global.User = users.First();
+                Global.idAccount = users.First().idAccount;
+                Global.Search();
 
                 MainWindow mainWindow = new MainWindow();
                 this.Hide();
@@ -59,13 +50,6 @@ namespace FurnitureSales
             }
 
         }
-
-
-
-
-
-
-
 
         private void ShowPassword(object sender, RoutedEventArgs e)
         {
@@ -88,6 +72,9 @@ namespace FurnitureSales
             errorPassword.Visibility = Visibility.Hidden;
         }
 
-        
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
+        }
     }
 }
