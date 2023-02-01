@@ -73,6 +73,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\CreateUpdateFurnityreTypesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CreateUpdateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,6 +134,9 @@
     </Compile>
     <Compile Include="Pages\CreateUpdateContractsPage.xaml.cs">
       <DependentUpon>CreateUpdateContractsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateUpdateFurnityreTypesPage.xaml.cs">
+      <DependentUpon>CreateUpdateFurnityreTypesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CreateUpdateWindow.xaml.cs">
       <DependentUpon>CreateUpdateWindow.xaml</DependentUpon>

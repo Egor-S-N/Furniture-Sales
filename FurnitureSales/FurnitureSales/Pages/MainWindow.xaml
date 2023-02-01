@@ -34,7 +34,7 @@
             <Button Name="butUpdate" Content="Update" Grid.Row="2" Height="25" Margin="20,0,22,5"  Click="butUpdateContract_Click"/>
         </StackPanel>
 
-        <StackPanel Name="BuyerPanel" Grid.Row="2" Grid.Column="0" Visibility="Visible" >
+        <StackPanel Name="BuyerPanel" Grid.Row="2" Grid.Column="0" Visibility="Hidden" >
             <Button  Content="New contract" Grid.Row="2"  Height="25" Margin="20,280,22,5"  Click="butAddNewContract_Click"/>
         </StackPanel>
         

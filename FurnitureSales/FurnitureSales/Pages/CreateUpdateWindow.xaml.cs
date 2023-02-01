@@ -29,6 +29,11 @@ namespace FurnitureSales.Pages
                 case "Contracts":
                     this.Content = new  CreateUpdateContractsPage();
                     break;
+
+                case "Models":
+                    this.Content = new CreateUpdateFurnityreTypesPage();
+                    break;
+
                 case "Buyers":
                     this.Content = null;
                     break;

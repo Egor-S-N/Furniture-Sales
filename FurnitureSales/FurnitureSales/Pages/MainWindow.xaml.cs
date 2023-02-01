@@ -140,7 +140,7 @@ namespace FurnitureSales
         private void butAddNewContract_Click(object sender, RoutedEventArgs e)
         {
             Global.TableState = "New";
-            CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
+            CreateUpdateWindow createWindow = new CreateUpdateWindow(name);
             createWindow.Show();
 
         }
@@ -209,7 +209,7 @@ namespace FurnitureSales
         {
             Global.Index = Index;
             Global.TableState = "Update";
-            CreateUpdateWindow createWindow = new CreateUpdateWindow("Contracts");
+            CreateUpdateWindow createWindow = new CreateUpdateWindow(name);
             createWindow.Show();
         }
 
