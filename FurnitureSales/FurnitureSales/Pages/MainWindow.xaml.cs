@@ -1,6 +1,7 @@
 ﻿using FurnitureSales.Models;
 using FurnitureSales.Pages;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -394,6 +395,88 @@ namespace FurnitureSales
             }
         }
 
+
+        private void ButSearch_Click(object sender, RoutedEventArgs e)
+        {
+            switch (name)
+            {
+
+                case "Contracts":
+                    Global.cureGrid = contractsDataGrid;
+                    butDel.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    butUpdate.IsEnabled = true;
+                    break;
+
+                case "Models":
+                    db.TypesOfFurnitures.Load();
+                    modelsDataGrid.ItemsSource = db.TypesOfFurnitures.Local.Select(x => new
+                    {
+                        Model = x.model,
+                        Name = x.furnitureName,
+                        Sizes = x.furnitureCharacteristics,
+                        Price = x.price.ToString() + " $"
+
+                    }).Where(y => y.Model.Contains(SearchString.Text)).ToList();
+
+                    butDel.IsEnabled = false;
+                    butUpdate.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    Global.cureGrid = modelsDataGrid;
+                    break;
+
+                case "Sales":
+                    db.Sales.Load();
+                    SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
+                    {
+                        ID = x.idSale,
+                        Name = x.furnitureName,
+                        Model = x.model,
+                        SoldCount = x.numberOfSold
+
+                    }).Where(y => y.Model.Contains(SearchString.Text)).ToList();
+                    Global.cureGrid = SalesDataGrid;
+                    butDel.IsEnabled = false;
+                    butAddNew.IsEnabled = false;
+                    butUpdate.IsEnabled = true;
+                    break;
+
+                case "Workers":
+                    db.Workers.Load();
+                    workersDataGrid.ItemsSource = db.Workers.Local.Select(x => new
+                    {
+                        ID = x.idWorker,
+                        Surname = x.surname,
+                        Name = x.name,
+                        Patronymic = x.patronymic,
+                        Post = x.post,
+                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                    }).Where(y => y.Surname.Contains(SearchString.Text)).ToList();
+                    Global.cureGrid = workersDataGrid;
+                    butDel.IsEnabled = true;
+                    butUpdate.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    break;
+
+                case "Buyers":
+                    db.Buyers.Load();
+                    buyersDataGrid.ItemsSource = db.Buyers.Local.Select(x => new
+                    {
+                        ID = x.idBuyer,
+                        Organization = x.nameOfOrganization,
+                        Adress = x.adress,
+                        Phone = x.phone,
+                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                    }).Where(y => y.Organization.Contains(SearchString.Text)).ToList();
+                    Global.cureGrid = buyersDataGrid;
+                    butDel.IsEnabled = true;
+                    butUpdate.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    break;
+            }
+        }
 
     }
 }
