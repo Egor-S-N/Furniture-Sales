@@ -33,3 +33,7 @@ D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\Cr
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateFurnityreTypesPage.baml
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\UpdateSalesPage.g.cs
 D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\UpdateSalesPage.baml
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateWorkersPage.g.cs
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateWorkersPage.baml
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateBuyersPage.g.cs
+D:\VS_PROJECTS\Furniture-Sales-\FurnitureSales\FurnitureSales\obj\Debug\Pages\CreateUpdateBuyersPage.baml

@@ -36,9 +36,12 @@ namespace FurnitureSales.Pages
                 case "Sales":
                     this.Content = new UpdateSalesPage();
                     break;
+                case "Workers":
+                    this.Content = new CreateUpdateWorkersPage();
+                    break;
 
                 case "Buyers":
-                    this.Content = null;
+                    this.Content = new CreateUpdateBuyersPage();
                     break;
             }
 

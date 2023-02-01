@@ -174,6 +174,8 @@ namespace FurnitureSales
                         case "Workers":
                             var worker = (from table in db.Workers where table.idWorker == Index select table).First();
                             db.Workers.Remove(worker);
+                            var account = (from table in db.Accounts where table.idAccount == worker.codeAccount select table).First();
+                            db.Accounts.Remove(account);
                             break;
                         case "Buyers":
                             var buyer = (from table in db.Buyers where table.idBuyer == Index select table).First();

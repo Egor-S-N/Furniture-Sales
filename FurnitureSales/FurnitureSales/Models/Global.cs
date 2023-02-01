@@ -30,7 +30,8 @@ namespace FurnitureSales.Models
         public static void Search()
         {
 
-
+            try
+            {
             if (User != null)
             {
                if (User.typeOfAccount == "Admin" || User.typeOfAccount == "Manager")
@@ -41,6 +42,12 @@ namespace FurnitureSales.Models
                 {
                     userName = (from buyer in db.Buyers where buyer.codeAccount == idAccount select buyer).First().nameOfOrganization;
                 }
+
+            }
+
+            }
+            catch
+            {
 
             }
         }
