@@ -1,16 +1,13 @@
 ﻿using FurnitureSales.Models;
 using FurnitureSales.Pages;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace FurnitureSales
 {
@@ -152,19 +149,37 @@ namespace FurnitureSales
         //delete contracts
         private void butDelContract_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show(Index.ToString(), "Delete contract", MessageBoxButton.OKCancel);
+            //where i can write switch for deleting in every table 
+            var result = MessageBox.Show(Index.ToString(), $"Delete {name}", MessageBoxButton.OKCancel);
+
+
             if (result == MessageBoxResult.OK)
             {
                 try
                 {
-
-                    var contract = (from table in db.Contarcts where table.idContract == Index select table).First();
-                    var values = from table in db.ContractsSales where table.idContract == Index select table;
-                    foreach (var item in values)
+                    switch (name)
                     {
-                        db.ContractsSales.Remove(item);
+                        case "Contracts":
+                            var contract = (from table in db.Contarcts where table.idContract == Index select table).First();
+                            var values = from table in db.ContractsSales where table.idContract == Index select table;
+                            foreach (var item in values)
+                            {
+                                db.ContractsSales.Remove(item);
+                            }
+                            db.Contarcts.Remove(contract);
+                            break;
+
+                        case "Workers":
+                            var worker = (from table in db.Workers where table.idWorker == Index select table).First();
+                            db.Workers.Remove(worker);
+                            break;
+                        case "Buyers":
+                            var buyer = (from table in db.Buyers where table.idBuyer == Index select table).First();
+                            db.Buyers.Remove(buyer);
+                            break;
+
                     }
-                    db.Contarcts.Remove(contract);
+                    
                     db.SaveChanges();
                     MessageBox.Show("DELETED");
                     RefreshgGrid();
@@ -208,71 +223,76 @@ namespace FurnitureSales
             if (name != ti.Header.ToString())
             {
 
-            name = ti.Header.ToString();
-            switch(ti.Header)
-            {
-                case "Contracts":
-                    Global.cureGrid = contractsDataGrid;
-                    break;
+                name = ti.Header.ToString();
+                switch (ti.Header)
+                {
+                    case "Contracts":
+                        Global.cureGrid = contractsDataGrid;
+                        butDel.IsEnabled = true;
+                        break;
 
-                case "Models":
-                    db.TypesOfFurnitures.Load();
-                    modelsDataGrid.ItemsSource = db.TypesOfFurnitures.Local.Select(x=> new
-                    {
-                        Model = x.model,
-                        Name = x.furnitureName,
-                        Sizes = x.furnitureCharacteristics,
-                        Price = x.price.ToString() + " $"
+                    case "Models":
+                        db.TypesOfFurnitures.Load();
+                        modelsDataGrid.ItemsSource = db.TypesOfFurnitures.Local.Select(x => new
+                        {
+                            Model = x.model,
+                            Name = x.furnitureName,
+                            Sizes = x.furnitureCharacteristics,
+                            Price = x.price.ToString() + " $"
 
-                    }).ToList();
-                    Global.cureGrid = modelsDataGrid;
-                    break;
+                        }).ToList();
+                        butDel.IsEnabled = false;
+                        Global.cureGrid = modelsDataGrid;
+                        break;
 
-                case "Sales":
-                    db.Sales.Load();
-                    SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
-                    {
-                        ID = x.idSale,
-                        Name = x.furnitureName,
-                        Model = x.model,
-                        SoldCount = x.numberOfSold
+                    case "Sales":
+                        db.Sales.Load();
+                        SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
+                        {
+                            ID = x.idSale,
+                            Name = x.furnitureName,
+                            Model = x.model,
+                            SoldCount = x.numberOfSold
 
-                    }).ToList();
-                    Global.cureGrid = SalesDataGrid;
-                    break;
+                        }).ToList();
+                        Global.cureGrid = SalesDataGrid;
+                        butDel.IsEnabled = false;
+                        break;
 
-                case "Workers":
-                    db.Workers.Load();
-                    workersDataGrid.ItemsSource = db.Workers.Local.Select(x => new
-                    {
-                        ID = x.idWorker,
-                        Surname = x.surname,
-                        Name = x.name,
-                        Patronymic = x.patronymic,
-                        Post = x.post,
-                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
-                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
-                    }).ToList();
-                    Global.cureGrid = workersDataGrid;
-                    break;
+                    case "Workers":
+                        db.Workers.Load();
+                        workersDataGrid.ItemsSource = db.Workers.Local.Select(x => new
+                        {
+                            ID = x.idWorker,
+                            Surname = x.surname,
+                            Name = x.name,
+                            Patronymic = x.patronymic,
+                            Post = x.post,
+                            Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                            Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                        }).ToList();
+                        Global.cureGrid = workersDataGrid;
+                        butDel.IsEnabled = true;
+                        break;
 
-                case "Buyers":
-                    db.Buyers.Load();
-                    buyersDataGrid.ItemsSource = db.Buyers.Local.Select(x => new
-                    {
-                        ID = x.idBuyer,
-                        Organization = x.nameOfOrganization,
-                        Adress = x.adress,
-                        Phone = x.phone,
-                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
-                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
-                    }).ToList();
-                    Global.cureGrid = buyersDataGrid;
-                    break;
-            }
+                    case "Buyers":
+                        db.Buyers.Load();
+                        buyersDataGrid.ItemsSource = db.Buyers.Local.Select(x => new
+                        {
+                            ID = x.idBuyer,
+                            Organization = x.nameOfOrganization,
+                            Adress = x.adress,
+                            Phone = x.phone,
+                            Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                            Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                        }).ToList();
+                        Global.cureGrid = buyersDataGrid;
+                        butDel.IsEnabled = true;
+                        break;
+                }
             }
         }
 
-       
+
     }
 }
