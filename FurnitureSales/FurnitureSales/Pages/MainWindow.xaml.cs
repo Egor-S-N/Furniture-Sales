@@ -6,7 +6,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace FurnitureSales
@@ -197,11 +199,90 @@ namespace FurnitureSales
             RefreshgGrid();
         }
 
+
+
+
+
+
+
+        public static DataGridCell GetCell(DataGrid grid, int row, int column)
+        {
+            DataGridRow rowContainer = GetRow(grid, row);
+            return GetCell(grid, rowContainer, column);
+        }
+
+        public static DataGridRow GetRow(DataGrid grid, int index)
+        {
+            DataGridRow row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(index);
+            if (row == null)
+            {
+                // May be virtualized, bring into view and try again.
+                grid.UpdateLayout();
+                grid.ScrollIntoView(grid.Items[index]);
+                row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(index);
+            }
+            return row;
+        }
+        public static DataGridCell GetCell(DataGrid grid, DataGridRow row, int column)
+        {
+            if (row != null)
+            {
+                DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(row);
+
+                if (presenter == null)
+                {
+                    grid.ScrollIntoView(row, grid.Columns[column]);
+                    presenter = GetVisualChild<DataGridCellsPresenter>(row);
+                }
+
+                DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
+                return cell;
+            }
+            return null;
+        }
+
+        private static T GetVisualChild<T>(Visual parent) where T : Visual
+        {
+            T child = default(T);
+            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < numVisuals; i++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
+                child = v as T;
+                if (child == null)
+                {
+                    child = GetVisualChild<T>(v);
+                }
+                if (child != null)
+                {
+                    break;
+                }
+            }
+            return child;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         //double click choise row 
         private void DataGridRow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Index = Global.cureGrid.SelectedIndex + 1;
-            MessageBox.Show(name + "\n" + Index.ToString());
+            if(name == "Models")
+            {
+                var cell = GetCell(modelsDataGrid, Index - 1, 0).Content as TextBlock;
+                Global.ModelName = cell.Text;
+            }
+
         }
 
         //udapte contracts
@@ -212,84 +293,102 @@ namespace FurnitureSales
             CreateUpdateWindow createWindow = new CreateUpdateWindow(name);
             createWindow.Show();
         }
+        private void UpdateTables_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTables();
+        }
+        private void UpdateTables()
+        {
+            db = new FurnitureDBEntities();
+            switch (name)
+            {
 
+                case "Contracts":
+                    Global.cureGrid = contractsDataGrid;
+                    butDel.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    butUpdate.IsEnabled = true;
+                    break;
 
+                case "Models":
+                    db.TypesOfFurnitures.Load();
+                    modelsDataGrid.ItemsSource = db.TypesOfFurnitures.Local.Select(x => new
+                    {
+                        Model = x.model,
+                        Name = x.furnitureName,
+                        Sizes = x.furnitureCharacteristics,
+                        Price = x.price.ToString() + " $"
+
+                    }).ToList();
+                    butDel.IsEnabled = false;
+                    butUpdate.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    Global.cureGrid = modelsDataGrid;
+                    break;
+
+                case "Sales":
+                    db.Sales.Load();
+                    SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
+                    {
+                        ID = x.idSale,
+                        Name = x.furnitureName,
+                        Model = x.model,
+                        SoldCount = x.numberOfSold
+
+                    }).ToList();
+                    Global.cureGrid = SalesDataGrid;
+                    butDel.IsEnabled = false;
+                    butAddNew.IsEnabled = false;
+                    butUpdate.IsEnabled = true;
+                    break;
+
+                case "Workers":
+                    db.Workers.Load();
+                    workersDataGrid.ItemsSource = db.Workers.Local.Select(x => new
+                    {
+                        ID = x.idWorker,
+                        Surname = x.surname,
+                        Name = x.name,
+                        Patronymic = x.patronymic,
+                        Post = x.post,
+                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                    }).ToList();
+                    Global.cureGrid = workersDataGrid;
+                    butDel.IsEnabled = true;
+                    butUpdate.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    break;
+
+                case "Buyers":
+                    db.Buyers.Load();
+                    buyersDataGrid.ItemsSource = db.Buyers.Local.Select(x => new
+                    {
+                        ID = x.idBuyer,
+                        Organization = x.nameOfOrganization,
+                        Adress = x.adress,
+                        Phone = x.phone,
+                        Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
+                        Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
+                    }).ToList();
+                    Global.cureGrid = buyersDataGrid;
+                    butDel.IsEnabled = true;
+                    butUpdate.IsEnabled = true;
+                    butAddNew.IsEnabled = true;
+                    break;
+            }
+        }
         //change tables
         private void TabCCC_GotFocus(object sender, RoutedEventArgs e)
         {
-
             //change datagrid
             TabItem ti = TabCCC.SelectedItem as TabItem;
             if (name != ti.Header.ToString())
             {
-
+                
                 name = ti.Header.ToString();
-                switch (ti.Header)
-                {
-                    case "Contracts":
-                        Global.cureGrid = contractsDataGrid;
-                        butDel.IsEnabled = true;
-                        break;
-
-                    case "Models":
-                        db.TypesOfFurnitures.Load();
-                        modelsDataGrid.ItemsSource = db.TypesOfFurnitures.Local.Select(x => new
-                        {
-                            Model = x.model,
-                            Name = x.furnitureName,
-                            Sizes = x.furnitureCharacteristics,
-                            Price = x.price.ToString() + " $"
-
-                        }).ToList();
-                        butDel.IsEnabled = false;
-                        Global.cureGrid = modelsDataGrid;
-                        break;
-
-                    case "Sales":
-                        db.Sales.Load();
-                        SalesDataGrid.ItemsSource = db.Sales.Local.Select(x => new
-                        {
-                            ID = x.idSale,
-                            Name = x.furnitureName,
-                            Model = x.model,
-                            SoldCount = x.numberOfSold
-
-                        }).ToList();
-                        Global.cureGrid = SalesDataGrid;
-                        butDel.IsEnabled = false;
-                        break;
-
-                    case "Workers":
-                        db.Workers.Load();
-                        workersDataGrid.ItemsSource = db.Workers.Local.Select(x => new
-                        {
-                            ID = x.idWorker,
-                            Surname = x.surname,
-                            Name = x.name,
-                            Patronymic = x.patronymic,
-                            Post = x.post,
-                            Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
-                            Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
-                        }).ToList();
-                        Global.cureGrid = workersDataGrid;
-                        butDel.IsEnabled = true;
-                        break;
-
-                    case "Buyers":
-                        db.Buyers.Load();
-                        buyersDataGrid.ItemsSource = db.Buyers.Local.Select(x => new
-                        {
-                            ID = x.idBuyer,
-                            Organization = x.nameOfOrganization,
-                            Adress = x.adress,
-                            Phone = x.phone,
-                            Login = (from login in db.Accounts where login.idAccount == x.codeAccount select login.login).First(),
-                            Password = (from password in db.Accounts where password.idAccount == x.codeAccount select password.password).First(),
-                        }).ToList();
-                        Global.cureGrid = buyersDataGrid;
-                        butDel.IsEnabled = true;
-                        break;
-                }
+                UpdateTables();
+                
             }
         }
 

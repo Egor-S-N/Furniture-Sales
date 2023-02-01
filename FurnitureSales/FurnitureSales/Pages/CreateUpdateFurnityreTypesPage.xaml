@@ -23,7 +23,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Add new furniture" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Name="Operation" Grid.Row="0" Grid.ColumnSpan="2" Content="Add new furniture" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <Label Grid.Row="1" Content="Model name" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <Label Grid.Row="2" Content="Furniture type" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -37,7 +37,7 @@
         <TextBox Name="HeightTB" Grid.Row="4" Grid.Column="1" BorderBrush="Black" Margin="5" Padding="11" FontSize="20"/>
         <TextBox Name="PriceTB" Grid.Row="5" Grid.Column="1" BorderBrush="Black" Margin="5" Padding="11" FontSize="20" />
 
-        <Button Content="Create furniture" Grid.Row="6" Grid.ColumnSpan="2" Margin="300,10" FontSize="20"/>
+        <Button Name="ButEnter" Content="Create furniture" Grid.Row="6" Grid.ColumnSpan="2" Margin="300,10" FontSize="20"/>
 
     </Grid>
 </Page>

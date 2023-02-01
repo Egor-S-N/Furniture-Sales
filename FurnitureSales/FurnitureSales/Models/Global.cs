@@ -24,6 +24,7 @@ namespace FurnitureSales.Models
         public static string TableState { get; set; }
         public static dynamic Table { get; set; }
         public static int Index { get; set; }
+        public static string ModelName { get; set; }
         
 
         public static void Search()

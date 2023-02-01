@@ -33,6 +33,9 @@ namespace FurnitureSales.Pages
                 case "Models":
                     this.Content = new CreateUpdateFurnityreTypesPage();
                     break;
+                case "Sales":
+                    this.Content = new UpdateSalesPage();
+                    break;
 
                 case "Buyers":
                     this.Content = null;

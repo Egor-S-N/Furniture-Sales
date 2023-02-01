@@ -75,7 +75,7 @@
 
                                 </DataGrid.ItemContainerStyle>
                             </DataGrid>
-                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="Button_Click"/>
+                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="UpdateTables_Click"/>
 
                         </StackPanel>
                     </GroupBox>
@@ -92,7 +92,7 @@
                                     </Style>
                                 </DataGrid.ItemContainerStyle>
                             </DataGrid>
-                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="Button_Click"/>
+                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="UpdateTables_Click"/>
 
                         </StackPanel>
                     </GroupBox>
@@ -110,7 +110,7 @@
 
                                 </DataGrid.ItemContainerStyle>
                             </DataGrid>
-                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="Button_Click"/>
+                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="UpdateTables_Click"/>
 
                         </StackPanel>
                     </GroupBox>
@@ -128,7 +128,7 @@
 
                                 </DataGrid.ItemContainerStyle>
                             </DataGrid>
-                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="Button_Click"/>
+                            <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="UpdateTables_Click"/>
 
                         </StackPanel>
                     </GroupBox>
