@@ -1,9 +1,15 @@
-﻿using FurnitureSales.Models;
+﻿using ClosedXML.Excel;
+using FurnitureSales.Models;
 using FurnitureSales.Pages;
+using iText.StyledXmlParser.Jsoup.Nodes;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +31,7 @@ namespace FurnitureSales
         public MainWindow()
         {
             InitializeComponent();
-            RefreshgGrid();
+            RefreshgGrid(); 
             Global.cureWindow = this;
             Global.cureGrid = contractsDataGrid;
 
@@ -52,6 +58,8 @@ namespace FurnitureSales
                 WorkersTI.Visibility = Visibility.Hidden;
                 BuyersTI.Visibility = Visibility.Hidden;
                 ManagerPanel.Visibility = Visibility.Visible;
+                BtnPDF.Visibility = Visibility.Visible;
+                BtnExcel.Visibility = Visibility.Visible;
             }
             else
             {
@@ -478,5 +486,113 @@ namespace FurnitureSales
             }
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            GraphicWindow graphicWindow = new GraphicWindow();
+            graphicWindow.Show();
+        }
+
+        private void BtnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> cols = new List<string>();
+
+
+            for (int i = 0; i < SalesDataGrid.Columns.Select(a => a.Header).Count(); i++)
+            {
+                cols.Add(SalesDataGrid.Columns[i].Header.ToString());
+            }
+
+
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+                try
+                {
+
+                    var worksheet = workbook.Worksheets.Add("Sales");
+
+
+                    worksheet.Column(1).Width = 5;
+                    worksheet.Column(2).Width = 13;
+                    worksheet.Column(3).Width = 29;
+
+                    worksheet.Column(4).Width = 19;
+                    worksheet.Row(1).Style.Font.Bold = true;
+                    worksheet.Row(1).Style.Font.FontSize = 18;
+
+                    worksheet.Rows(2, 100).Style.Font.FontSize = 16;
+                    worksheet.Rows(1, 100).Style.Font.FontName = "TimesNewRoman";
+
+
+                    var sales = from s in db.Sales select s;
+
+                    for (int k = 0; k < cols.Count; k++)
+                    {
+                        worksheet.Cell(1, k + 1).Value = cols[k];
+                    }
+
+                    int i = 2;
+                    foreach (var item in sales)
+                    {
+                        worksheet.Cell(i, 1).Value = item.idSale;
+                        worksheet.Cell(i, 2).Value = item.furnitureName;
+                        worksheet.Cell(i, 3).Value = item.model;
+                        worksheet.Cell(i, 4).Value = item.numberOfSold;
+
+                        i++;
+                    }
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.ShowDialog();
+                    workbook.SaveAs(fileDialog.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Err");
+                }
+            }
+        }
+
+        private void BtnPDF_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF Files | *.pdf";
+            saveFileDialog.DefaultExt = "pdf";
+            saveFileDialog.ShowDialog();
+
+
+            iTextSharp.text.Document pdfDoc = new iTextSharp.text.Document(PageSize.A2, 10f, 10f, 10f, 0f);
+
+            PdfWriter.GetInstance(pdfDoc, new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate));
+            pdfDoc.Open();
+            PdfPTable pdfTable = new PdfPTable(SalesDataGrid.Columns.Count);
+            pdfTable.WidthPercentage = 100;
+            pdfTable.DefaultCell.Padding = 3;
+            pdfTable.DefaultCell.BorderWidth = 1;
+            pdfTable.DefaultCell.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+            // Add the DataGrid's columns to the table
+            for (int i = 0; i < SalesDataGrid.Columns.Count; i++)
+            {
+                //DataGridTextColumn column = InsuranceTable.Columns[i] as DataGridTextColumn;
+                pdfTable.AddCell(SalesDataGrid.Columns[i].Header.ToString());
+            }
+
+            //Add the DataGrid's rows to the table
+            for (int i = 0; i < SalesDataGrid.Items.Count; i++)
+            {
+                for (int j = 0; j < SalesDataGrid.Columns.Count; j++)
+                {
+                    var cell = GetCell(SalesDataGrid, i, j).Content as TextBlock;
+                    pdfTable.AddCell(new Phrase(cell.Text));
+                }
+            }
+
+            //Add the table to the PDF document
+            //pdfDoc.Add(new iTextSharp.text.Paragraph("Hello World!"));
+            pdfDoc.Add(pdfTable);
+
+
+            //// Close the PDF document
+            pdfDoc.Close();
+        }
     }
 }

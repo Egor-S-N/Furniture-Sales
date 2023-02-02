@@ -46,7 +46,7 @@
         </StackPanel>
         
         <StackPanel Name="ManagerPanel" Grid.Row="2" Grid.Column="0" Visibility="Hidden" >
-            <Button  Content="Generate report" Grid.Row="2"  Height="25" Margin="20,250,22,5"  Click="butAddNewContract_Click"/>
+            <Button  Content="Generate report" Grid.Row="2"  Height="25" Margin="20,250,22,5"  Click="Button_Click_1"/>
             <Button Content="Update" Grid.Row="2" Height="25" Margin="20,0,22,5"  Click="butUpdateContract_Click"/>
         </StackPanel>
 
@@ -103,8 +103,11 @@
                                     </Style>
                                 </DataGrid.ItemContainerStyle>
                             </DataGrid>
+                            <StackPanel Orientation="Horizontal">
                             <Button Content="Refresh" Margin="10,260,0,0" HorizontalAlignment="Left" Click="UpdateTables_Click"/>
-
+                            <Button Visibility="Hidden" Name="BtnPDF" Content="Download PDF" Margin="10,260,0,0" HorizontalAlignment="Left" Click="BtnPDF_Click"/>
+                            <Button Visibility="Hidden" Name="BtnExcel" Content="Downlod Excel" Margin="10,260,0,0" HorizontalAlignment="Left" Click="BtnExcel_Click"/>
+                            </StackPanel>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
